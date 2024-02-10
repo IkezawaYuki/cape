@@ -8,8 +8,6 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 def line_endpoint(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-
-
     return func.HttpResponse("cape", status_code=200)
 
 
