@@ -5,3 +5,8 @@
 azure-functions
 line-bot-sdk==3.8.1
 openai==1.12.0
+azure-common==1.1.28
+azure-core==1.30.0
+azure-cosmos==4.5.1
+azure-identity==1.15.0
+azure-search-documents==11.4.0

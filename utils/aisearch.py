@@ -11,8 +11,6 @@ search_client = SearchClient(service_endpoint, index_name, AzureKeyCredential(ke
 
 def retrieval(search_text):
     results = search_client.search(search_text=search_text)
+    results = list(results)
     return results[0]["content"]
 
-
-if __name__ == "__main__":
-    print("Searching")
