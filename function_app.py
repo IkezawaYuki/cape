@@ -14,7 +14,6 @@ def line_endpoint(req: func.HttpRequest) -> func.HttpResponse:
     signature = req.headers['X-Line-Signature']
     logging.info(signature)
 
-    
     body = req.get_body().decode("utf-8")
 
     logging.info("Request body: " + body)

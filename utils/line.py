@@ -23,6 +23,7 @@ def return_message(event):
 
     user_id = event.source.user_id
     logging.info(user_id)
+    
     # cosmosdbを呼び出し、会話履歴を取得する
 
     # azure ai search で回答の単語を検索する

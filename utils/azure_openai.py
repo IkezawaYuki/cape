@@ -28,7 +28,3 @@ def generation(input_message, arguments=None):
     )
 
     return completion.choices[0].message.content
-
-
-if __name__ == "__main__":
-    print(generation("2番目はどこですか"))
