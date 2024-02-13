@@ -1,6 +1,6 @@
 import azure.functions as func
 import logging
-from utils.line import line_handler, handler
+from utils.line import line_handler
 
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
@@ -10,19 +10,18 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 def line_endpoint(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
+    logging.info(req.headers)
     signature = req.headers['X-Line-Signature']
     logging.info(signature)
 
-    body = req.get_json()
+    
+    body = req.get_body().decode("utf-8")
+
     logging.info("Request body: " + body)
 
-    line_handler(signature, body)
-    
-    return 'OK'
+    line_handler(body, signature)
 
-
-
-    return func.HttpResponse("cape", status_code=200)
+    return func.HttpResponse("fire", status_code=200)
 
 
 # @app.route(route="line_endpoint")
