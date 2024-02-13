@@ -26,10 +26,8 @@ if __name__ == "__main__":
             for script_or_style in soup(["script", "style"]):
                 script_or_style.decompose()
             text = soup.get_text(separator=' ', strip=True)
-            for t in text.split(" "):
-                if t not in words:
-                    words.append(t)
+            words.append(text)
 
-    with open(f"{domain}.txt", "w", encoding="utf-8") as f:
+    with open(f"{domain}.json", "w", encoding="utf-8") as f:
         for word in words:
-            f.write(word + "\n")
+            f.write(word)
