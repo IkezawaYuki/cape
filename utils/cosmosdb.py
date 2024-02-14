@@ -1,6 +1,7 @@
 import os
 import uuid
 import datetime
+import logging
 import azure.cosmos.cosmos_client as cosmos_client
 from azure.cosmos import CosmosClient, PartitionKey
 
@@ -20,7 +21,7 @@ container = database.get_container_client(container_name)
 def save_chat(user_id, content, role):
     item = {
         'id': str(uuid.uuid4()),
-        'timestamp': datetime.datetime.now(),
+        'timestamp': str(datetime.datetime.now()),
         'userId': user_id,
         'content': content,
         'role': role,
@@ -30,27 +31,19 @@ def save_chat(user_id, content, role):
 
 def get_chat_history(user_id):
     query = f"SELECT TOP 5 * FROM c WHERE c.userId = '{user_id}' ORDER BY c.timestamp DESC"
-    item_response = container.query_items(
+    item_response = list(container.query_items(
         query=query,
         enable_cross_partition_query=True
-    )
+    ))
+    logging.info(item_response)
     history = []
     for item in item_response:
         history.append({
             "role": item["role"],
             "content": item["content"],
         })
-    return history.reverse()
+    history.reverse()
+    return history
 
-
-# if __name__ == "__main__":
-#     # item = {
-#     #     'id': 'item3',
-#     #     'userId': 'ike',
-#     #     'name': 'notebook',
-#     #     'description': 'A notebook',
-#     #     'isComplete': False
-#     # }
-#     # container.create_item(item)
 
 

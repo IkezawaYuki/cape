@@ -49,5 +49,5 @@ def return_message(event):
 
     # 返答を保存する
     save_chat(user_id, text, "user")
-    save_chat(user_id, resp_message.content, "system")
+    save_chat(user_id, resp_message.content, "assistant")
 

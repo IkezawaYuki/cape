@@ -15,7 +15,7 @@ def generation(input_message, arguments=None):
         {"role":"system","content":"あなたはホームページスタンダートというホームページ制作会社のアシスタントです。見込み客、もしくは既存顧客に対して、質問の応答をします。応答は比較的短めの文章でに端的に、かつ丁寧に回答します。"}]
 
     if arguments:
-        message_text.append(arguments)
+        message_text += arguments
         
     message_text.append({
         "role": "user",
