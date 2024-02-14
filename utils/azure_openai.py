@@ -12,7 +12,7 @@ client = AzureOpenAI(
 
 def generation(input_message, arguments=None):
     message_text = [
-        {"role":"system","content":"あなたはホームページスタンダートというホームページ制作会社のアシスタントです。見込み客、もしくは既存顧客に対して、質問の応答をします。"}]
+        {"role":"system","content":"あなたはホームページスタンダートというホームページ制作会社のアシスタントです。見込み客、もしくは既存顧客に対して、質問の応答をします。応答は比較的短めの文章でに端的に、かつ丁寧に回答します。"}]
 
     if arguments:
         message_text.append(arguments)
@@ -24,7 +24,14 @@ def generation(input_message, arguments=None):
 
     completion = client.chat.completions.create(
         model="gpt-4",
-        messages=message_text
+        messages=message_text,
+        max_tokens=300,
+        temperature=0.9,
     )
+    # print(completion.choices[0].message)
+    # return completion.choices[0].message.content
+    return completion.choices[0].message
 
-    return completion.choices[0].message.content
+
+# if __name__ == "__main__":
+#     resp = generation(input_message="こんにちは")
