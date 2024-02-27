@@ -39,15 +39,22 @@ def return_message(event):
 以下、付加情報
 ```{add_info}```"""
 
-    # azure openaiで処理を投げ、responseを受け取る
-    resp_message = generation(prompt, arguments)
+    # azure openaiに投げ、responseを受け取る
+    openai_response = generation(prompt, arguments)
+    if not openai_response.get("function_call"):
+        message = openai_response.content
+    else:
+        f_call = openai_response["function_call"]
+        print("Function call: " + f_call["name"] + "()\nParams: " + f_call["arguments"] + "\n")
+        function_response = globals()[f_call["name"]](f_call["arguments"])
+        print(function_response)
+        message = "担当者におつなぎします。しばらくお待ちください。"
 
     # lineで返答する。
     line_bot_api.push_message(
         user_id,
-        TextSendMessage(text=resp_message.content))
+        TextSendMessage(text=message))
 
     # 返答を保存する
     save_chat(user_id, text, "user")
-    save_chat(user_id, resp_message.content, "assistant")
-
+    save_chat(user_id, message, "assistant")
